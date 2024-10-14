@@ -50,13 +50,13 @@
                                         </div>
                                       </div>
 
-                                      {{-- <div class="d-flex flex-row align-items-center mb-2">
+                                      <div class="d-flex flex-row align-items-center mb-2">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div data-mdb-input-init class="form-outline flex-fill mb-0">
                                           <label for="otp">OTP (Google Authenticator)</label>
-                                        <input type="text" id="otp" name="otp" class="form-control">
+                                        <input type="text" id="otp" name="otp" class="form-control" placeholder="6-digit code">
                                         </div>
-                                      </div> --}}
+                                      </div>
 
                   
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">

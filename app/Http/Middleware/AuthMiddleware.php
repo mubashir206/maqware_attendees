@@ -20,9 +20,9 @@ class AuthMiddleware
             return redirect('unauthorized');
         }
 
-        // if (Auth::user()->google2fa_secret && !session('2fa_verified')) {
-        //     return redirect('verify-2fa')->withErrors(['error' => 'Please verify your 2FA.']);
-        // }
+        if (Auth::user()->google2fa_secret && !session('2fa_verified')) {
+            return redirect()->route('verify2faPage')->withErrors(['error' => 'Please verify your 2FA.']);
+        }
         
         return $next($request);
     }

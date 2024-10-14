@@ -49,3 +49,5 @@ Route::controller(GoogleController::class)->group(function(){
 
 
 // 2FA setup
+Route::get('/verify-2fa', [AuthController::class, 'verify2faPage'])->name('verify2faPage');
+Route::post('/verify-2fa', [AuthController::class, 'verify2fa'])->name('verify2fa');
