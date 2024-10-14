@@ -25,4 +25,10 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class, 'attendees', 'event_id', 'user_id');
     }
+    public function scheduleEmailNotification()
+    {
+        $job = (new \App\Jobs\SendEventEmailsJob($this->id))
+                ->delay($this->start_time->subMinutes(5));
+        dispatch($job);
+    }
 }

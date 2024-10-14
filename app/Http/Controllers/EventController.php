@@ -43,8 +43,11 @@ class EventController extends Controller
             }
 
             // dd($validatedData);
-            Event::create($validatedData);
+           $event =  Event::create($validatedData);
+           $event->attendees()->sync($validatedData['attendees']);
 
+           // Schedule email notification
+           $event->scheduleEmailNotification();
             return redirect()->route('event.addPage')->with('success', 'Event added successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'error foun  ');

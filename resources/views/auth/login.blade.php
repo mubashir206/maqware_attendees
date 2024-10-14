@@ -18,7 +18,7 @@
                             <div class="card-body p-md-5">
                               <div class="row justify-content-center">
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                  
+
                                   @if(Session::has('error'))
                                   <div class="text-danger" role="alert">
                                       {{ Session::get('error') }}
@@ -53,7 +53,7 @@
                   
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                       <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Login</button> &nbsp; &nbsp;
-                                      <a href="{{ route('loginPage') }}">Register</a>
+                                      <a href="{{ route('registerPage') }}">Register</a>
 
                                     </div>
                                     <a href="{{ route('auth.google') }}">
