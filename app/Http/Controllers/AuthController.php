@@ -26,10 +26,15 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+
+        // $google2fa = app('pragmarx.google2fa');
+        // $google2faSecret = $google2fa->generateSecretKey();
+
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
+            // 'google2fa_secret' => $google2faSecret,
         ]);
 
         
@@ -51,6 +56,17 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        // $google2fa = app('pragmarx.google2fa');
+
+       
+        // $valid = $google2fa->verifyKey($user->google2fa_secret, $request->otp);
+
+        // if (!$valid) {
+        //     Auth::logout();
+        //     return back()->withErrors(['error' => 'Invalid OTP']);
+        // }
+
         return redirect('event');
        
     }
@@ -62,4 +78,6 @@ class AuthController extends Controller
         return redirect('login-page');
 
     }
+
+    
 }
