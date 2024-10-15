@@ -7,7 +7,6 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TwoFAController;
 use App\Http\Controllers\UnauthorizedController;
-use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
