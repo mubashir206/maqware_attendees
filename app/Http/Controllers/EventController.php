@@ -23,35 +23,45 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        // dd("all googe");
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            'image' => 'nullable',
             'event_type' => 'required',
             'appearance' => 'required',
             'location' => 'nullable',
             'status' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
+            'is_recurring' => 'nullable',
+            'recurrence_day' => 'nullable',
+             'attendees' => 'nullable'
         ]);
+
         try {
+            $validatedData['is_recurring'] = $request->has('is_recurring') ? 1 : 0;
 
             if ($request->hasFile('image')) {
+
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->move(public_path('images'), $imageName);
                 $validatedData['image'] = $imageName;
             }
-
-            // dd($validatedData);
+            
+            
            $event =  Event::create($validatedData);
-           $event->attendees()->sync($validatedData['attendees']);
-
-           // Schedule email notification
-        //    $event->scheduleEmailNotification();
+           
+           if ($request->has('attendees')) {
+            $event->attendees()->sync($validatedData['attendees']);
+        }
+           
+        //    dd($event);
 
             return redirect()->route('event.addPage')->with('success', 'Event added successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'error foun  ');
+            // return redirect()->back()->with('error', 'error foun  ');
+            dd("Error: " . $e->getMessage());
         }
     }
 
@@ -75,7 +85,9 @@ class EventController extends Controller
             'start_date' => 'required',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'image' => 'nullable',
+            
         ]);
+        dd($validatedData);
 
         try {
 
@@ -84,9 +96,6 @@ class EventController extends Controller
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->move(public_path('images'), $imageName);
                 $validatedData['image'] = $imageName;
-                // if ($event->image) {
-                //     File::delete(public_path('images/' . $event->image));
-                // }
             }
 
             // dd($validatedData);

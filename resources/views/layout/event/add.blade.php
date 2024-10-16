@@ -8,6 +8,16 @@
                         {{ session('success') }}
                     </div>
                 @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <h2>Add Event</h2>
             <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -24,7 +34,7 @@
 
                 <div class="form-group mb-3">
                     <label for="image">Event Image</label>
-                    <input type="file" id="image" name="image" class="form-control-file" required accept="image/*">
+                    <input type="file" id="image" name="image" class="form-control-file"  accept="image/*">
                 </div>
 
                 <div class="form-group mb-3">
@@ -73,6 +83,20 @@
                 <div class="form-group mb-3">
                     <label for="end_date">End Date(Optional)</label>
                     <input type="datetime-local" id="end_date" name="end_date" class="form-control">
+                </div>
+
+                <div class="form-check mb-3">
+                    <label class="form-check-label" for="flexCheckDefault">Is Recurring</label>
+                    <input type="checkbox" class="form-check-input" name="is_recurring" id="flexCheckDefault"> 
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="recurrence_day">Select Recurrence Days:</label>
+                    <select name="recurrence_day" class="form-control">
+                        @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                            <option value="{{ $day }}">{{ $day }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group mb-3">

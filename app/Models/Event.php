@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,17 +20,40 @@ class Event extends Model
         'status',
         'start_date',
         'end_date',
+        'is_recurring',
+        'recurrence_type',
+        'recurrence_day',
+        'recurrence_until',
+
     ];
 
-    public function users()
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class, 'attendees', 'event_id', 'user_id');
+    // }
+    
+    protected $casts = [
+        'recurrence_day' => 'array', 
+    ];
+
+    public function attendees()
     {
         return $this->belongsToMany(User::class, 'attendees', 'event_id', 'user_id');
     }
+       
     
-    // public function scheduleEmailNotification()
-    // {
-    //     $job = (new \App\Jobs\SendEventEmailsJob($this->id))
-    //             ->delay($this->start_time->subMinutes(5));
-    //     dispatch($job);
-    // }
+    public function isOccurringOn(Carbon $date): bool
+    {
+        if (!$this->is_recurring || !$this->recurrence_day) {
+            return false;
+        }
+            // day name
+        $dayName = $date->format('l');
+        
+        return in_array($dayName, $this->recurrence_day);
+    }
+
+    
+
+
 }

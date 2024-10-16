@@ -26,9 +26,20 @@ class SendEventEmailsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        
-        foreach ($this->event->attendees as $attendee) {
-            Mail::to($attendee->email)->send(new EventReminderMail($this->event));
-        }
+        // $attendees = $this->event->attendees;
+        // $attendees->chunk(10, function($attendees){
+        //     foreach ($attendees as $attendee ) {
+        //         Mail::to($attendee->email)->send(new EventReminderMail($this->event));
+        //     } 
+        // });
+
+        $attendees = $this->event->attendees;
+       
+            foreach ($attendees as $attendee ) {
+                Mail::to($attendee->email)->send(new EventReminderMail($this->event));
+            } 
+      
     }
 }
+
+

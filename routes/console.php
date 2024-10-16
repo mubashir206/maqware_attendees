@@ -14,13 +14,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 
-Schedule::call(function () {
-    Log::info('Checking for events to send reminders.');
-
-    $events = Event::where('start_date', Carbon::now()->addMinutes(5))->get();
-
-    foreach ($events as $event) {
-        Log::info("Dispatching reminder job for event: {$event->name}");
-        SendEventEmailsJob::dispatch($event);
-    }
-})->everyMinute(); 
+// Artisan::command('event:reminder', function () {
+//     Artisan::call('event:reminder');
+//     $this->info("something:");
+// })->everyMinute();
