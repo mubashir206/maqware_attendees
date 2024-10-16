@@ -44,7 +44,7 @@ class ReminderCommand extends Command
             $endTime = Carbon::now()->format('H:i:s');
 
             $events = Event::whereRaw("TIME(start_date) BETWEEN ? AND ?", [$startTime, $endTime])
-                ->where('is_recurring', true)
+                ->where('is_recurring', true)->where('recurrence_day', Carbon::now()->format('l'))
                 ->get();
 
         dd($events, "somethig is found....");
