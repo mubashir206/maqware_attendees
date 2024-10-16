@@ -38,11 +38,14 @@ class ReminderCommand extends Command
 
         // we can also these two method for getting the event on the base of days, recurring, other login 
 
-        $events = Event::whereBetween('start_date', [
-            Carbon::now()->subMinutes(5), 
-            Carbon::now(),
-        ])->where('is_recurring', true) 
-          ->get();
+
+
+            $startTime = Carbon::now()->subMinutes(5)->format('H:i:s');
+            $endTime = Carbon::now()->format('H:i:s');
+
+            $events = Event::whereRaw("TIME(start_date) BETWEEN ? AND ?", [$startTime, $endTime])
+                ->where('is_recurring', true)
+                ->get();
 
         dd($events, "somethig is found....");
         foreach ($events as $event) {
