@@ -31,15 +31,10 @@ class ReminderCommand extends Command
      */
     public function handle()
     {
-       // $events = Event::where('is_recurring', true) 
-        //   ->get();
+       // $events = Event::where('is_recurring', true)->get();
 
         // $events = Event::where('recurrence_day', Carbon::now()->format('l'))
-        // whereBetween('start_date', [
-        //     Carbon::now()->subMinutes(5), 
-        //     Carbon::now(),
-        // ])->where('is_recurring', true) 
-        //   ->get();
+        //->where('is_recurring', true)->get();
 
         // we can also these two method for getting the event on the base of days, recurring, other login 
 
