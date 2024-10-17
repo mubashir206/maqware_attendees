@@ -6,7 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TwoFAController;
-use App\Http\Middleware\AuthMiddleware;
+use App\Http\Controllers\UnauthorizedController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,6 +35,10 @@ Route::get('/attendees/edit/{id}', [AttendeesController::class, 'edit'])->name('
 Route::post('/attendees/update/{id}', [AttendeesController::class, 'update'])->name('attendees.update')->middleware('auth');
 Route::get('/attendees/delete/{id}', [AttendeesController::class, 'delete'])->name('attendees.delete')->middleware('auth');
 
+// route for the unauthorized users 
+Route::get('unauthorized', [UnauthorizedController::class, 'unauthorized'])->name('unauthorized');
+
+
 // route for login with google
 
 Route::controller(GoogleController::class)->group(function(){
@@ -44,9 +48,5 @@ Route::controller(GoogleController::class)->group(function(){
 
 
 // 2FA setup
-Route::get('/2fa/setup', [TwoFAController::class, 'show2FASetup'])->name('2fa.setup');
-Route::post('/2fa/setup', [TwoFAController::class, 'setup2FA']);
-
-// 2FA verification
-Route::get('/2fa/verify', [TwoFAController::class, 'show2FAVerification'])->name('2fa.verify');
-Route::post('/2fa/verify', [TwoFAController::class, 'verify2FACode']);
+Route::get('/verify-2fa', [AuthController::class, 'verify2faPage'])->name('verify2faPage');
+Route::post('/verify-2fa', [AuthController::class, 'verify2fa'])->name('verify2fa');

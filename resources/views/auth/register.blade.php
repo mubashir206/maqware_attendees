@@ -60,7 +60,9 @@
                                       <a href="{{ route('loginPage') }}">Already have account</a>
 
                                     </div>
-                  
+                                    <a href="{{ route('auth.google') }}">
+                                      <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png">
+                                  </a>
                                   </form>
                   
                                 </div>

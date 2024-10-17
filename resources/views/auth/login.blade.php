@@ -18,7 +18,7 @@
                             <div class="card-body p-md-5">
                               <div class="row justify-content-center">
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                  
+
                                   @if(Session::has('error'))
                                   <div class="text-danger" role="alert">
                                       {{ Session::get('error') }}
@@ -50,10 +50,18 @@
                                         </div>
                                       </div>
 
+                                      <div class="d-flex flex-row align-items-center mb-2">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                                          <label for="otp">OTP (Google Authenticator)</label>
+                                        <input type="text" id="otp" name="otp" class="form-control" placeholder="6-digit code">
+                                        </div>
+                                      </div>
+
                   
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                       <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Login</button> &nbsp; &nbsp;
-                                      <a href="{{ route('loginPage') }}">Register</a>
+                                      
 
                                     </div>
                                     <a href="{{ route('auth.google') }}">
@@ -61,6 +69,7 @@
                                   </a>
                   
                                   </form>
+                                  <a href="{{ route('registerPage') }}">Register</a>
                   
                                 </div>
                                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
