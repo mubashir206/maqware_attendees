@@ -38,15 +38,39 @@ class Event extends Model
     }
        
     
+    // public function isOccurringOn(Carbon $date): bool
+    // {
+    //     if (!$this->is_recurring || !$this->recurrence_day) {
+    //         return false;
+    //     }
+            
+    //     $dayName = $date->format('l');
+        
+    //     return in_array($dayName, $this->recurrence_day);
+    // }
+
+
+
     public function isOccurringOn(Carbon $date): bool
     {
-        if (!$this->is_recurring || !$this->recurrence_day) {
-            return false;
+        if (!$this->is_recurring || !$this->recurrence_type) {
+            return $this->start_date->isSameDay($date);
         }
-            
-        $dayName = $date->format('l');
-        
-        return in_array($dayName, $this->recurrence_day);
+
+        switch ($this->recurrence_type) {
+            case 'daily':
+                return true;
+            case 'weekly':
+                return in_array($date->format('l'), $this->recurrence_day);
+            case 'fortnightly':
+                return $this->start_date->diffInWeeks($date) % 2 === 0;
+            case 'monthly':
+                return $this->start_date->day === $date->day;
+            case 'yearly':
+                return $this->start_date->isSameDay($date);
+            default:
+                return false;
+        }
     }
 
     

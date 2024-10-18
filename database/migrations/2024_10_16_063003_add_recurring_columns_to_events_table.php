@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('events', function (Blueprint $table) {
             //
             $table->boolean('is_recurring')->default(false); 
-            $table->string('recurrence_type')->default('weekly'); 
+            $table->enum('recurrence_type', ['daily', 'weekly', 'fortnightly', 'monthly', 'yearly', 'none'])->default('none'); 
             $table->json('recurrence_day')->nullable(); 
             $table->date('recurrence_until')->nullable(); 
         });

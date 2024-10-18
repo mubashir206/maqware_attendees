@@ -100,6 +100,18 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label for="recurrence_type">Recurrence Type</label>
+                    <select id="recurrence_type" name="recurrence_type" class="form-control" required>
+                        <option value="none">None </option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="fortnightly">Fortnightly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </form>

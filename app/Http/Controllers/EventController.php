@@ -36,7 +36,8 @@ class EventController extends Controller
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'is_recurring' => 'nullable',
             'recurrence_day' => 'nullable',
-             'attendees' => 'nullable'
+            'recurrence_type' => 'nullable',
+            'attendees' => 'nullable'
         ]);
 
         try {
@@ -60,7 +61,6 @@ class EventController extends Controller
 
             return redirect()->route('event.addPage')->with('success', 'Event added successfully!');
         } catch (\Exception $e) {
-            // return redirect()->back()->with('error', 'error foun  ');
             dd("Error: " . $e->getMessage());
         }
     }
@@ -85,13 +85,20 @@ class EventController extends Controller
             'start_date' => 'required',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'image' => 'nullable',
+            'attendees' => 'nullable',
+            'is_recurring' => 'nullable',
+            'recurrence_day' => 'nullable',
+            'recurrence_type' => 'nullable',
             
         ]);
-        dd($validatedData);
+        // dd($validatedData);
 
         try {
 
             $event = Event::findOrFail($id);
+
+            $validatedData['is_recurring'] = $request->has('is_recurring') ? 1 : 0;
+
             if ($request->hasFile('image')) {
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->move(public_path('images'), $imageName);
@@ -100,6 +107,10 @@ class EventController extends Controller
 
             // dd($validatedData);
             $event->update($validatedData);
+
+            if ($request->has('attendees')) {
+                $event->attendees()->sync($validatedData['attendees']);
+            }
 
             return redirect()->route('event.edit', $id)->with('success', 'Event updated successfully!');
         } catch (\Exception $e) {

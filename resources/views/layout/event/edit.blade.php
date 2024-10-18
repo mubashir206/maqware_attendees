@@ -84,6 +84,35 @@
                 <input type="datetime-local" id="end_date" name="end_date" class="form-control" value="{{ old('end_date', $event->end_date ? \Carbon\Carbon::parse($event->end_date)->format('Y-m-d\TH:i') : '') }}">
             </div>
 
+            <div class="form-check mb-3">
+                <label class="form-check-label" for="flexCheckDefault">Is Recurring</label>
+                <input type="checkbox" class="form-check-input" name="is_recurring" id="flexCheckDefault"> 
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="recurrence_day">Select Recurrence Days:</label>
+                <select name="recurrence_day" class="form-control">
+                    @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                        <option value="{{ $day }}" {{ $event->recurrence_day == $day ? 'selected' : '' }}>
+                            {{ $day }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="recurrence_type">Recurrence Type</label>
+                <select id="recurrence_type" name="recurrence_type" class="form-control" required>
+                    <option value="none" {{ $event->recurrence_type == 'none' ? 'selected' : '' }}>None</option>
+                    <option value="daily" {{ $event->recurrence_type == 'daily' ? 'selected' : '' }}>Daily</option>
+                    <option value="weekly" {{ $event->recurrence_type == 'weekly' ? 'selected' : '' }}>Weekly</option>
+                    <option value="fortnightly" {{ $event->recurrence_type == 'fortnightly' ? 'selected' : '' }}>Fortnightly</option>
+                    <option value="monthly" {{ $event->recurrence_type == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                    <option value="yearly" {{ $event->recurrence_type == 'yearly' ? 'selected' : '' }}>Yearly</option>
+                </select>
+            </div>
+            
+
             <div class="form-group mb-3">
                 <button type="submit" class="btn btn-success">Save</button>
             </div>
