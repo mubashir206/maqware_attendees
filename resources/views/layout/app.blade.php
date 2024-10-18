@@ -30,10 +30,13 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('fullcalender') }}">Full Calender</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" href="{{ route('event') }}">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('attendees') }}">Attendees</a>
+                            <a class="nav-link active" href="{{ route('attendees') }}">Attendees</a>
                         </li>
                       
                         @if (Auth::check())
@@ -42,10 +45,10 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                                <a class="nav-link active" href="{{ route('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">Signup</a>
+                                <a class="nav-link active" href="{{ route('register') }}">Signup</a>
                             </li>
                         @endif
                     </ul>

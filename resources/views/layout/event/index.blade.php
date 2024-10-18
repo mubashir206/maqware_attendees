@@ -35,7 +35,7 @@
                         <th>Status</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Image</th>
+                        {{-- <th>Image</th> --}}
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -50,9 +50,10 @@
                             <td>{{ $event->appearance }}</td>
                             <td>{{ $event->location }}</td>
                             <td>{{ $event->status }}</td>
-                            <td>{{ $event->start_date }}</td>
-                            <td>{{ $event->end_date }}</td>
-                            <td>
+                            <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d/m/Y')}}</td>
+                            <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d/m/Y')}}</td>
+
+                            {{-- <td>
                                 @if ($event->image)
                                     <a href="{{ asset('images/'.$event->image) }}" target="_blank" title="View the Image">
                                         <img src="{{ asset('images/'.$event->image) }}" alt="Event Image" width="100" height="100">
@@ -60,7 +61,7 @@
                                 @else
                                     <p>No Image</p>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 <a href="{{ route('event.edit', $event->id) }}" title="Edit" class="btn btn-secondary mb-1">Edit</a>&nbsp;
                                 <a href="{{ route('event.delete', $event->id) }}" onclick="return confirm('Are you sure want to delete this information')" title="Delete" class="btn btn-danger">Delete</a>

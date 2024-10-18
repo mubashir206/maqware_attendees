@@ -3,6 +3,7 @@
 use App\Http\Controllers\AttendeesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TwoFAController;
@@ -50,3 +51,11 @@ Route::controller(GoogleController::class)->group(function(){
 // 2FA setup
 Route::get('/verify-2fa', [AuthController::class, 'verify2faPage'])->name('verify2faPage');
 Route::post('/verify-2fa', [AuthController::class, 'verify2fa'])->name('verify2fa');
+
+// Route for the full Calendar 
+
+Route::controller(FullCalenderController::class)->group(function(){
+    Route::get('fullcalender', 'index')->name('fullcalender')->middleware('auth');
+    Route::post('fullcalenderAjax', 'ajax');
+});
+

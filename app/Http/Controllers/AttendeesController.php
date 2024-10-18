@@ -34,7 +34,7 @@ class AttendeesController extends Controller
             $user = User::findOrFail($validated['user_id']);
             $event = Event::findOrFail($validated['event_id']);
         
-            $event->users()->attach($user->id);
+            $event->attendees()->attach($user->id);
             return redirect()->back()->with('success', 'The attendees inserted successfully !');
 
         }catch (\Exception $e) {

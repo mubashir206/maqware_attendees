@@ -27,10 +27,6 @@ class Event extends Model
 
     ];
 
-    // public function users()
-    // {
-    //     return $this->belongsToMany(User::class, 'attendees', 'event_id', 'user_id');
-    // }
     
     protected $casts = [
         'recurrence_day' => 'array', 
@@ -47,7 +43,7 @@ class Event extends Model
         if (!$this->is_recurring || !$this->recurrence_day) {
             return false;
         }
-            // day name
+            
         $dayName = $date->format('l');
         
         return in_array($dayName, $this->recurrence_day);
