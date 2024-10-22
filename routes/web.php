@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+// route for the login and signup 
+
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/register-page', [AuthController::class, 'registerPage'])->name('registerPage');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
