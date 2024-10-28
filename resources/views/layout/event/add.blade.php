@@ -81,15 +81,16 @@
 
            
                 <div class="form-group mb-3">
-                    <label for="end_date">End Date(Optional)</label>
-                    <input type="datetime-local" id="end_date" name="end_date" class="form-control">
+                    <label for="end_date">End Date</label>
+                    <input type="datetime-local" id="end_date" name="end_date" class="form-control" required>
                 </div>
 
                 <div class="form-check mb-3">
                     <label class="form-check-label" for="flexCheckDefault">Is Recurring</label>
-                    <input type="checkbox" class="form-check-input" name="is_recurring" id="flexCheckDefault"> 
+                    <input type="checkbox" class="form-check-input" name="is_recurring" id="is_recurring"> 
                 </div>
 
+                <div id="recurrence_fields" style="display: none;">
                 <div class="form-group mb-3">
                     <label for="recurrence_day">Select Recurrence Days:</label>
                     <select name="recurrence_day" class="form-control">
@@ -101,7 +102,7 @@
 
                 <div class="form-group mb-3">
                     <label for="recurrence_type">Recurrence Type</label>
-                    <select id="recurrence_type" name="recurrence_type" class="form-control" required>
+                    <select id="recurrence_type" name="recurrence_type" class="form-control">
                         <option value="none">None </option>
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
@@ -111,10 +112,33 @@
                     </select>
                 </div>
 
+                
+                <div class="form-group mb-3">
+                    <label for="name">Recurrence Until</label>
+                    <input type="date" id="recurrence_until" name="recurrence_until" class="form-control" placeholder="Enter recurrence until date...">
+                </div>
+
+                </div>
+
                 <div class="form-group mb-3">
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </form>
         </div>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    
+                var checkbox = document.getElementById('is_recurring');
+                var recurrenceFields = document.getElementById('recurrence_fields');
+        
+                checkbox.addEventListener('change', function() {
+                  
+                    if (checkbox.checked) {
+                        recurrenceFields.style.display = 'block';
+                    } else {
+                        recurrenceFields.style.display = 'none';
+                    }
+                });
+            });
+        </script>
 @endsection

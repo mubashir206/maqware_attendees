@@ -86,8 +86,11 @@
 
             <div class="form-check mb-3">
                 <label class="form-check-label" for="flexCheckDefault">Is Recurring</label>
-                <input type="checkbox" class="form-check-input" name="is_recurring" id="flexCheckDefault"> 
+                <input type="checkbox" class="form-check-input" name="is_recurring" id="is_recurring" value="{{ $event->is_recurring }}" {{ $event->is_recurring == 1 ? 'checked' : '' }}> 
             </div>
+
+            <div id="recurrence_fields" style="display: block;">
+
 
             <div class="form-group mb-3">
                 <label for="recurrence_day">Select Recurrence Days:</label>
@@ -102,7 +105,7 @@
             
             <div class="form-group mb-3">
                 <label for="recurrence_type">Recurrence Type</label>
-                <select id="recurrence_type" name="recurrence_type" class="form-control" required>
+                <select id="recurrence_type" name="recurrence_type" class="form-control">
                     <option value="none" {{ $event->recurrence_type == 'none' ? 'selected' : '' }}>None</option>
                     <option value="daily" {{ $event->recurrence_type == 'daily' ? 'selected' : '' }}>Daily</option>
                     <option value="weekly" {{ $event->recurrence_type == 'weekly' ? 'selected' : '' }}>Weekly</option>
@@ -112,11 +115,38 @@
                 </select>
             </div>
             
+            <div class="form-group mb-3">
+                <label for="name">Recurrence Until</label>
+                <input type="date" id="recurrence_until" name="recurrence_until" class="form-control" placeholder="Enter recurrence until date..." value="{{ old('recurrence_until', $event->recurrence_until) }}">
+            </div>
 
+        </div>
             <div class="form-group mb-3">
                 <button type="submit" class="btn btn-success">Save</button>
             </div>
         </form>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.17.0/babel.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const is_recurring = document.getElementById('is_recurring');
+          const recurrence_fields = document.getElementById('recurrence_fields');
+    
+    
+          document.addEventListener('change', function () {
+           if(is_recurring.checked){
+
+            recurrence_fields.style.display = 'block';
+
+           }else{
+
+            recurrence_fields.style.display = 'none';
+           }
+
+          });
+          
+         });
+      </script>
 
 @endsection

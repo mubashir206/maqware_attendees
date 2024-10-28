@@ -86,7 +86,7 @@
             </div>
 
             <div class="form-check mb-3">
-                <label class="form-check-label" for="flexCheckDefault">Is Recurring</label>
+                <label class="form-check-label" for="is_recurring">Is Recurring</label>
                 <input type="checkbox" class="form-check-input" name="is_recurring" id="is_recurring"> 
             </div>
 
@@ -109,6 +109,11 @@
                     <option value="monthly">Monthly</option>
                     <option value="yearly">Yearly</option>
                 </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="recurrence_until">Recurrence Until</label>
+                <input type="date" id="recurrence_until" name="recurrence_until" class="form-control" placeholder="Enter recurrence until date...">
             </div>
 
           </form>
@@ -199,6 +204,8 @@
     var recurrence_day = $('#recurrence_day').val();
     var recurrence_type = $('#recurrence_type').val();
     var is_recurring = $('#is_recurring').val();
+    var recurrence_until = $('#recurrence_until').val();
+
 
     if (title) {
         $.ajax({
@@ -212,6 +219,8 @@
                 status: status,
                 recurrence_day: recurrence_day,
                 recurrence_type: recurrence_type,
+                recurrence_until: recurrence_until,
+                is_recurring: is_recurring,
                 start: start,
                 end: end,
                 type: 'add'

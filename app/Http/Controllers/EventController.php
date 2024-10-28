@@ -37,7 +37,8 @@ class EventController extends Controller
             'is_recurring' => 'nullable',
             'recurrence_day' => 'nullable',
             'recurrence_type' => 'nullable',
-            'attendees' => 'nullable'
+            'attendees' => 'nullable',
+           'recurrence_until' => 'nullable|date|after_or_equal:end_date',
         ]);
 
         try {
@@ -89,8 +90,10 @@ class EventController extends Controller
             'is_recurring' => 'nullable',
             'recurrence_day' => 'nullable',
             'recurrence_type' => 'nullable',
+            'recurrence_until' => 'nullable|date|after_or_equal:end_date',
             
         ]);
+
         // dd($validatedData);
 
         try {

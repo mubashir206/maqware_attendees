@@ -56,21 +56,33 @@ class Event extends Model
         if (!$this->is_recurring || !$this->recurrence_type) {
             return $this->start_date->isSameDay($date);
         }
+        //  I'm checking that if the recrrence until is smaller then the date then return false other wise true 
 
-        switch ($this->recurrence_type) {
-            case 'daily':
-                return true;
-            case 'weekly':
-                return in_array($date->format('l'), $this->recurrence_day);
-            case 'fortnightly':
-                return $this->start_date->diffInWeeks($date) % 2 === 0;
-            case 'monthly':
-                return $this->start_date->day === $date->day;
-            case 'yearly':
-                return $this->start_date->isSameDay($date);
-            default:
-                return false;
+        if ($this->recurrence_until && $date->greaterThan(Carbon::parse($this->recurrence_until))) {
+            return false;
         }
+
+       
+    switch ($this->recurrence_type) {
+        case 'daily':
+            return true;
+
+        case 'weekly':
+            return in_array($date->format('l'), $this->recurrence_day);
+
+        case 'fortnightly':
+            return Carbon::parse($this->start_date)->diffInWeeks($date) % 2 === 0;
+
+        case 'monthly':
+            return Carbon::parse($this->start_date)->day === $date->day;
+
+        case 'yearly':
+            return Carbon::parse($this->start_date)->isSameDay($date);
+
+        default:
+            return false;
+    }
+
     }
 
     
