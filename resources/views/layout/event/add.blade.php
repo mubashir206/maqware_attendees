@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.app', ['activePage' => 'events'])
 
 @section('content')
 
@@ -6,6 +6,16 @@
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
             <h2>Add Event</h2>
@@ -24,7 +34,7 @@
 
                 <div class="form-group mb-3">
                     <label for="image">Event Image</label>
-                    <input type="file" id="image" name="image" class="form-control-file" required accept="image/*">
+                    <input type="file" id="image" name="image" class="form-control-file"  accept="image/*">
                 </div>
 
                 <div class="form-group mb-3">
@@ -71,8 +81,43 @@
 
            
                 <div class="form-group mb-3">
-                    <label for="end_date">End Date(Optional)</label>
-                    <input type="datetime-local" id="end_date" name="end_date" class="form-control">
+                    <label for="end_date">End Date</label>
+                    <input type="datetime-local" id="end_date" name="end_date" class="form-control" required>
+                </div>
+
+                <div class="form-check mb-3">
+                    <label class="form-check-label" for="flexCheckDefault">Is Recurring</label>
+                    <input type="checkbox" class="form-check-input" name="is_recurring" id="is_recurring"> 
+                </div>
+
+                <div id="recurrence_fields" style="display: none;">
+                <div class="form-group mb-3">
+                    <label for="recurrence_day">Select Recurrence Days:</label>
+                    <select name="recurrence_day" class="form-control">
+                        @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                            <option value="{{ $day }}">{{ $day }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="recurrence_type">Recurrence Type</label>
+                    <select id="recurrence_type" name="recurrence_type" class="form-control">
+                        <option value="none">None </option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="fortnightly">Fortnightly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+
+                
+                <div class="form-group mb-3">
+                    <label for="name">Recurrence Until</label>
+                    <input type="date" id="recurrence_until" name="recurrence_until" class="form-control" placeholder="Enter recurrence until date...">
+                </div>
+
                 </div>
 
                 <div class="form-group mb-3">
@@ -80,5 +125,20 @@
                 </div>
             </form>
         </div>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    
+                var checkbox = document.getElementById('is_recurring');
+                var recurrenceFields = document.getElementById('recurrence_fields');
+        
+                checkbox.addEventListener('change', function() {
+                  
+                    if (checkbox.checked) {
+                        recurrenceFields.style.display = 'block';
+                    } else {
+                        recurrenceFields.style.display = 'none';
+                    }
+                });
+            });
+        </script>
 @endsection

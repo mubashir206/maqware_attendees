@@ -14,15 +14,12 @@ class Google2FAMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, Closure $next)
     {
-
-        $user = Auth::user();
-
-        if ($user && $user->google2fa_secret && !$user->google2fa_passed) {
-            return redirect('2fa/verify'); 
+        if (Auth::check() && !session('2fa_verified')) {
+            return redirect('login-page')->withErrors(['error' => 'Please verify OTP']);
         }
-
+    
         return $next($request);
     }
 }

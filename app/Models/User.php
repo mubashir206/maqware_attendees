@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,16 +55,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Event::class, 'attendees', 'user_id', 'event_id');
     }
 
-    public function generateGoogle2FASecret()
-{
-    $google2fa = new Google2FA();
-    $this->google2fa_secret = $google2fa->generateSecretKey();
-    $this->save();
-}
-
-public function verifyGoogle2FACode($code)
-{
-    $google2fa = new Google2FA();
-    return $google2fa->verifyKey($this->google2fa_secret, $code);
-}
+    
+    
 }

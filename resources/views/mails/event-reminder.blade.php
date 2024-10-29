@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Event reminder</title>
 </head>
 <body>
-    <h1>Set up Two-Factor Authentication</h1>
-<img src="{{ $google2fa_url }}" alt="2FA QR Code">
-<p>Scan the QR code using your Google Authenticator app.</p>
-
+    <h1>Upcoming Event Reminder</h1>
+    <p>The event <strong>{{ $event->name }}</strong> is starting soon.</p>
+    <p>Start Time: {{ $event->start_date }}</p>
 </body>
 </html>

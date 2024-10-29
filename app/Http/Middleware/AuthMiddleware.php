@@ -17,7 +17,11 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return redirect('unauthorized');
+        }
+
+        if (Auth::user()->google2fa_secret && !session('2fa_verified')) {
+            return redirect()->route('verify2faPage')->withErrors(['error' => 'Please verify your 2FA.']);
         }
         
         return $next($request);

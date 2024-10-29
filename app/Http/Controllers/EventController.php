@@ -23,31 +23,46 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        // dd("all googe");
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            'image' => 'nullable',
             'event_type' => 'required',
             'appearance' => 'required',
             'location' => 'nullable',
             'status' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
+            'is_recurring' => 'nullable',
+            'recurrence_day' => 'nullable',
+            'recurrence_type' => 'nullable',
+            'attendees' => 'nullable',
+           'recurrence_until' => 'nullable|date|after_or_equal:end_date',
         ]);
+
         try {
+            $validatedData['is_recurring'] = $request->has('is_recurring') ? 1 : 0;
 
             if ($request->hasFile('image')) {
+
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->move(public_path('images'), $imageName);
                 $validatedData['image'] = $imageName;
             }
-
-            // dd($validatedData);
-            Event::create($validatedData);
+            
+            
+           $event =  Event::create($validatedData);
+           
+           if ($request->has('attendees')) {
+            $event->attendees()->sync($validatedData['attendees']);
+        }
+           
+        //    dd($event);
 
             return redirect()->route('event.addPage')->with('success', 'Event added successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'error foun  ');
+            dd("Error: " . $e->getMessage());
         }
     }
 
@@ -71,22 +86,34 @@ class EventController extends Controller
             'start_date' => 'required',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'image' => 'nullable',
+            'attendees' => 'nullable',
+            'is_recurring' => 'nullable',
+            'recurrence_day' => 'nullable',
+            'recurrence_type' => 'nullable',
+            'recurrence_until' => 'nullable|date|after_or_equal:end_date',
+            
         ]);
+
+        // dd($validatedData);
 
         try {
 
             $event = Event::findOrFail($id);
+
+            $validatedData['is_recurring'] = $request->has('is_recurring') ? 1 : 0;
+
             if ($request->hasFile('image')) {
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->move(public_path('images'), $imageName);
                 $validatedData['image'] = $imageName;
-                // if ($event->image) {
-                //     File::delete(public_path('images/' . $event->image));
-                // }
             }
 
             // dd($validatedData);
             $event->update($validatedData);
+
+            if ($request->has('attendees')) {
+                $event->attendees()->sync($validatedData['attendees']);
+            }
 
             return redirect()->route('event.edit', $id)->with('success', 'Event updated successfully!');
         } catch (\Exception $e) {
